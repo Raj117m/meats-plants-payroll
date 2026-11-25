@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meats & Plants — Payroll Automator (UI Design)</title>
+<style>
+:root{--bg:#0f1412;--card:#18201c;--line:#26302b;--tx:#e8efe9;--mut:#8b9a91;--g:#3ecf7a;--r:#ef5b5b;--y:#f3b63f;--b:#5aa9f5;--acc:#c8423a}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,Inter,Segoe UI,sans-serif}
+body{background:#0a0d0c;color:var(--tx);padding:24px}
+.top{display:flex;gap:8px;justify-content:center;margin-bottom:24px}
+.top button{background:var(--card);color:var(--tx);border:1px solid var(--line);padding:10px 18px;border-radius:999px;cursor:pointer;font-weight:600}
+.top button.on{background:var(--g);color:#06150c;border-color:var(--g)}
+.view{display:none}.view.on{display:block}
+/* phone */
+.phones{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
+.phone{width:360px;height:740px;background:var(--bg);border:10px solid #1d2420;border-radius:44px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.phone .lbl{position:absolute;top:-34px;left:0;right:0;text-align:center;color:var(--mut);font-size:13px}
+.pwrap{position:relative;margin-top:30px}
+.sb{display:flex;justify-content:space-between;padding:12px 22px 4px;font-size:12px;color:var(--mut)}
+.pc{flex:1;overflow:auto;padding:14px 18px}
+.hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.hd h2{font-size:20px}.hd small{color:var(--mut);display:block;font-size:12px}
+.av{width:40px;height:40px;border-radius:50%;background:var(--acc);display:grid;place-items:center;font-weight:700}
+.wifi{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;font-size:13px;margin-bottom:14px}
+.wifi.ok{background:#12301f;color:var(--g);border:1px solid #1f5a37}
+.wifi.no{background:#341616;color:var(--r);border:1px solid #5c2424}
+.dot{width:9px;height:9px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.clock{text-align:center;margin:8px 0 18px}.clock b{font-size:44px;font-weight:700;letter-spacing:-1px}.clock span{display:block;color:var(--mut);font-size:13px}
+.big{width:100%;padding:20px;border:none;border-radius:18px;font-size:18px;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.big small{font-weight:500;font-size:12px;opacity:.8}
+.in{background:var(--g);color:#06150c}.brk{background:var(--y);color:#2a1d00}.out{background:var(--r);color:#fff}
+.big.dis{background:#222a26;color:#56635b;cursor:not-allowed}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.card h4{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.row{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;border-bottom:1px dashed var(--line)}.row:last-child{border:none}
+.pos{color:var(--g)}.neg{color:var(--r)}.mut{color:var(--mut)}
+.sal{font-size:32px;font-weight:800;color:var(--g)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}.stat b{font-size:22px;display:block}.stat span{font-size:11px;color:var(--mut)}
+.pips{display:flex;gap:6px;margin-top:6px}.pip{flex:1;height:8px;border-radius:4px;background:#2a332e}.pip.f{background:var(--y)}
+.tabs{display:flex;border-top:1px solid var(--line);background:#121816}
+.tabs div{flex:1;text-align:center;padding:12px 0 18px;font-size:11px;color:var(--mut)}.tabs div.on{color:var(--g)}.tabs i{display:block;font-style:normal;font-size:18px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center;font-size:13px}
+.cal .h{color:var(--mut);font-size:11px}
+.cal .d{padding:9px 0;border-radius:10px;background:#1c2420}
+.cal .p{background:#173523;color:var(--g)}.cal .a{background:#3a1a1a;color:var(--r)}.cal .l{background:#3a2f12;color:var(--y)}.cal .sel{outline:2px solid var(--b);background:#14263a}.cal .x{opacity:.25;background:none}
+.btn{width:100%;padding:14px;border-radius:14px;border:none;background:var(--b);color:#04121f;font-weight:700;font-size:15px;margin-top:10px}
+.pill{font-size:11px;padding:3px 9px;border-radius:999px;font-weight:600}
+.pill.g{background:#173523;color:var(--g)}.pill.y{background:#3a2f12;color:var(--y)}.pill.r{background:#3a1a1a;color:var(--r)}.pill.b{background:#14263a;color:var(--b)}
+/* manager */
+.dash{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:220px 1fr;background:var(--bg);border:1px solid var(--line);border-radius:20px;overflow:hidden;min-height:820px}
+.side{background:#0c110f;border-right:1px solid var(--line);padding:22px 14px}
+.logo{font-weight:800;font-size:17px;margin-bottom:26px;padding:0 8px}.logo span{color:var(--acc)}
+.nav div{padding:11px 12px;border-radius:10px;color:var(--mut);margin-bottom:4px;font-size:14px;cursor:pointer}.nav div.on{background:var(--card);color:var(--tx)}
+.main{padding:24px 28px;overflow:auto}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.mh h1{font-size:24px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}.kpi span{color:var(--mut);font-size:12px}.kpi b{display:block;font-size:28px;margin-top:6px}
+.two{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-bottom:16px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;color:var(--mut);font-weight:500;font-size:12px;padding:8px 6px;border-bottom:1px solid var(--line)}
+td{padding:10px 6px;border-bottom:1px solid var(--line)}
+.sbtn{background:#222b27;border:1px solid var(--line);color:var(--tx);padding:6px 10px;border-radius:8px;font-size:12px;cursor:pointer}
+.sbtn.pr{background:var(--g);color:#06150c;border:none;font-weight:700}
+.matrix{overflow-x:auto}
+.mx{display:grid;grid-template-columns:110px repeat(30,1fr);gap:3px;font-size:10px;min-width:820px}
+.mx .n{font-size:12px;padding:4px 0}.mx .c{height:22px;border-radius:4px;cursor:pointer}
+.c.p{background:#2a8c55}.c.a{background:#c44}.c.l{background:#d39b2a}.c.o{background:#4a8fd6}.c.f{background:#1c2420}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mut);margin-top:10px}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.req{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.wa{background:#0b1f14;border:1px solid #1f5a37;border-radius:12px;padding:12px;font-size:12px;white-space:pre-line;font-family:ui-monospace,Menlo,monospace;color:#cfe;max-height:220px;overflow:auto}
+.pop{position:absolute;background:#1b2420;border:1px solid var(--b);border-radius:12px;padding:12px;font-size:13px;width:230px;box-shadow:0 10px 30px #0008}
+@media(max-width:900px){.dash{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top">
+  <button class="on" onclick="sw('emp',this)">📱 Employee App</button>
+  <button onclick="sw('mgr',this)">🖥 Manager Dashboard</button>
+</div>
+
+<!-- ============ EMPLOYEE ============ -->
+<div id="emp" class="view on"><div class="phones">
+
+ <!-- 1 Action dashboard -->
+ <div class="pwrap"><div class="phone"><div class="lbl">1 · Action Dashboard (on Wi-Fi)</div>
+  <div class="sb"><span>12:08</span><span>📶 MeatsPlants-Staff</span></div>
+  <div class="pc">
+   <div class="hd"><div><small>Good afternoon</small><h2>Ravi Kumar</h2></div><div class="av">RK</div></div>
+   <div class="wifi ok"><span class="dot"></span>Connected to Meats & Plants network · verified</div>
+   <div class="clock"><b>12:08 PM</b><span>Shift 12:00 PM – 12:00 AM · Grace until 12:15</span></div>
+   <button class="big in">Check-In <small>On time ✓</small></button>
+   <button class="big dis">Start Break <small>3h break</small></button>
+   <button class="big dis">Check-Out <small>—</small></button>
+   <div class="card"><h4>Today</h4>
+    <div class="row"><span>Status</span><span class="pill y">Not punched</span></div>
+    <div class="row"><span>Late marks this month</span><span>1 / 3</span></div>
+   </div>
+  </div>
+  <div class="tabs"><div class="on"><i>⏱</i>Punch</div><div><i>📒</i>Ledger</div><div><i>📅</i>Leave</div></div>
+ </div></div>
+
+ <!-- 1b locked -->
+ <div class="pwrap"><div class="phone"><div class="lbl">1b · Locked (off network)</div>
+  <div class="sb"><span>12:02</span><span>📶 Jio 4G</span></div>
+  <div class="pc">
+   <div class="hd"><div><small>Good afternoon</small><h2>Ravi Kumar</h2></div><div class="av">RK</div></div>
+   <div class="wifi no"><span class="dot"></span>Not on company Wi-Fi — actions locked</div>
+   <div style="text-align:center;padding:30px 10px"><div style="font-size:64px">🔒</div>
+    <p style="margin:10px 0 4px;font-weight:700">Connect to “MeatsPlants-Staff”</p>
+    <p class="mut" style="font-size:13px">Punching only works inside the store. Your location can’t be faked.</p></div>
+   <button class="big dis">Check-In</button><button class="big dis">Start Break</button><button class="big dis">Check-Out</button>
+  </div>
+  <div class="tabs"><div class="on"><i>⏱</i>Punch</div><div><i>📒</i>Ledger</div><div><i>📅</i>Leave</div></div>
+ </div></div>
+
+ <!-- 1c on shift -->
+ <div class="pwrap"><div class="phone"><div class="lbl">1c · On shift + reminder push</div>
+  <div class="sb"><span>16:40</span><span>📶 MeatsPlants-Staff</span></div>
+  <div class="pc">
+   <div class="card" style="border-color:var(--y);background:#251f10"><b style="font-size:13px">🔔 Meats & Plants</b><p style="font-size:13px;margin-top:4px">Break window open. Skip it? It’ll be banked toward your overtime bonus.</p></div>
+   <div class="wifi ok"><span class="dot"></span>On premises · checked in 12:04 PM</div>
+   <div class="clock"><b>4h 36m</b><span>worked today</span></div>
+   <button class="big dis">Checked-In <small>12:04 PM</small></button>
+   <button class="big brk">Start Break <small>3h · or skip to bank</small></button>
+   <button class="big out">Check-Out <small>Auto at 12:00 AM</small></button>
+  </div>
+  <div class="tabs"><div class="on"><i>⏱</i>Punch</div><div><i>📒</i>Ledger</div><div><i>📅</i>Leave</div></div>
+ </div></div>
+
+ <!-- 2 ledger -->
+ <div class="pwrap"><div class="phone"><div class="lbl">2 · Transparency Ledger</div>
+  <div class="sb"><span>18:10</span><span>📶</span></div>
+  <div class="pc">
+   <div class="hd"><h2>My Ledger</h2><span class="pill b">Nov 2026</span></div>
+   <div class="card"><h4>Projected salary</h4><div class="sal">₹17,100</div><span class="mut" style="font-size:12px">Base ₹18,000 · updates live</span></div>
+   <div class="grid3">
+    <div class="stat"><b>1</b><span>Paid leaves left</span></div>
+    <div class="stat"><b>2/3</b><span>Late marks</span></div>
+    <div class="stat"><b>3/4</b><span>Breaks skipped</span></div>
+   </div>
+   <div class="card"><h4>Overtime stacker</h4>
+    <div class="pips"><div class="pip f"></div><div class="pip f"></div><div class="pip f"></div><div class="pip"></div></div>
+    <p class="mut" style="font-size:12px;margin-top:8px">1 more skipped break → +1 day pay or +1 paid leave</p></div>
+   <div class="card"><h4>Breakdown</h4>
+    <div class="row"><span>Base salary</span><span>₹18,000</span></div>
+    <div class="row"><span>Unpaid leave × 1</span><span class="neg">− ₹600</span></div>
+    <div class="row"><span>Half-day (3 lates)</span><span class="neg">− ₹300</span></div>
+    <div class="row"><span>Overtime bonus</span><span class="mut">₹0 (pending)</span></div>
+    <div class="row"><b>Projected</b><b class="pos">₹17,100</b></div>
+   </div>
+  </div>
+  <div class="tabs"><div><i>⏱</i>Punch</div><div class="on"><i>📒</i>Ledger</div><div><i>📅</i>Leave</div></div>
+ </div></div>
+
+ <!-- 3 leave -->
+ <div class="pwrap"><div class="phone"><div class="lbl">3 · Leave Request</div>
+  <div class="sb"><span>18:12</span><span>📶</span></div>
+  <div class="pc">
+   <div class="hd"><h2>Request Leave</h2><span class="pill g">1 paid left</span></div>
+   <div class="card"><h4>December 2026</h4>
+    <div class="cal" id="ecal"></div></div>
+   <div class="card"><h4>Selected</h4>
+    <div class="row"><span>Dec 9, Dec 10</span><span>2 days</span></div>
+    <div class="row"><span>Paid / Unpaid</span><span><span class="pos">1</span> / <span class="neg">1</span></span></div>
+    <textarea placeholder="Reason (optional)" style="width:100%;margin-top:8px;background:#121816;border:1px solid var(--line);border-radius:10px;color:var(--tx);padding:10px;height:56px"></textarea>
+    <button class="btn">Send to Manager</button></div>
+   <div class="card"><h4>My requests</h4>
+    <div class="row"><span>Nov 21</span><span class="pill y">Pending</span></div>
+    <div class="row"><span>Nov 6</span><span class="pill g">Approved</span></div></div>
+  </div>
+  <div class="tabs"><div><i>⏱</i>Punch</div><div><i>📒</i>Ledger</div><div class="on"><i>📅</i>Leave</div></div>
+ </div></div>
+</div></div>
+
+<!-- ============ MANAGER ============ -->
+<div id="mgr" class="view"><div class="dash">
+ <div class="side"><div class="logo">Meats <span>&</span> Plants</div>
+  <div class="nav"><div class="on">📡 Live Roster</div><div>🗓 Attendance</div><div>💰 Payroll</div><div>📨 Leave Requests <span class="pill r">2</span></div><div>👥 Employees</div><div>⚙️ Rules</div></div></div>
+ <div class="main">
+  <div class="mh"><div><h1>Command Center</h1><span class="mut">Sun, 15 Nov 2026 · 4:42 PM</span></div>
+   <div style="display:flex;gap:8px"><button class="sbtn">✋ Manual Punch</button><button class="sbtn pr">⬇ Export Payroll</button></div></div>
+
+  <div class="kpis">
+   <div class="kpi"><span>On the floor</span><b class="pos">6</b></div>
+   <div class="kpi"><span>On 3h break</span><b style="color:var(--y)">2</b></div>
+   <div class="kpi"><span>Absent</span><b class="neg">2</b></div>
+   <div class="kpi"><span>Nov payroll (proj.)</span><b>₹1,74,350</b></div>
+  </div>
+
+  <div class="two">
+   <div class="card"><h4>Live Roster</h4>
+    <table><tr><th>Employee</th><th>Status</th><th>Since</th><th>Wi-Fi</th><th></th></tr>
+     <tbody id="roster"></tbody></table></div>
+   <div>
+    <div class="card"><h4>Leave Requests</h4>
+     <div class="req"><div><b>Ravi Kumar</b><br><span class="mut" style="font-size:12px">Dec 9–10 · 1 paid left</span></div><div><button class="sbtn">Decline</button> <button class="sbtn pr">Approve</button></div></div>
+     <div class="req"><div><b>Sana Ali</b><br><span class="mut" style="font-size:12px">Nov 21 · 0 paid left → unpaid</span></div><div><button class="sbtn">Decline</button> <button class="sbtn pr">Approve</button></div></div>
+    </div>
+    <div class="card"><h4>Rules</h4>
+     <div class="row"><span>Shift</span><span>12:00 PM – 12:00 AM</span></div>
+     <div class="row"><span>Grace period</span><span>15 min ✎</span></div>
+     <div class="row"><span>Paid leaves / month</span><span>3</span></div>
+     <div class="row"><span>3 lates →</span><span>½ day deduction</span></div>
+     <div class="row"><span>4 skipped breaks →</span><span>+1 day pay / +1 PL</span></div>
+    </div>
+   </div>
+  </div>
+
+  <div class="card" style="position:relative"><h4>Dynamic Override Calendar — November 2026 <span class="mut" style="text-transform:none">(click a red day to convert to Paid Leave)</span></h4>
+   <div class="matrix"><div class="mx" id="mx"></div></div>
+   <div class="legend"><span><i style="background:#2a8c55"></i>Present</span><span><i style="background:#d39b2a"></i>Paid leave</span><span><i style="background:#c44"></i>Unpaid</span><span><i style="background:#4a8fd6"></i>Manager override</span><span><i style="background:#1c2420"></i>Upcoming</span></div>
+   <div class="pop" id="pop" style="display:none"></div>
+  </div>
+
+  <div class="two">
+   <div class="card"><h4>Payout Sheet — November 2026</h4>
+    <table><tr><th>Employee</th><th>Base</th><th>Deductions</th><th>Bonus</th><th>Net</th></tr><tbody id="pay"></tbody></table>
+    <div style="display:flex;gap:8px;margin-top:12px"><button class="sbtn pr">📄 Export PDF</button><button class="sbtn">💬 Copy WhatsApp</button></div></div>
+   <div class="card"><h4>WhatsApp preview</h4><div class="wa" id="wa"></div></div>
+  </div>
+ </div>
+</div></div>
+
+<script>
+function sw(id,b){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));document.getElementById(id).classList.add('on');document.querySelectorAll('.top button').forEach(x=>x.classList.remove('on'));b.classList.add('on')}
+// employee calendar
+let c='';['M','T','W','T','F','S','S'].forEach(d=>c+=`<div class="h">${d}</div>`);c+='<div class="d x"></div>';
+for(let i=1;i<=31;i++)c+=`<div class="d ${i==9||i==10?'sel':''}">${i}</div>`;document.getElementById('ecal').innerHTML=c;
+// data
+const E=[['Ravi Kumar',18000,'Floor','12:04 PM',1],['Sana Ali',16000,'Break','3:10 PM',1],['Arjun Das',20000,'Floor','11:58 AM',1],['Meera Nair',15000,'Absent','—',0],['Imran Sheikh',17000,'Floor','12:12 PM',1],['Priya Bose',15000,'Break','3:30 PM',1],['Kabir Rao',22000,'Floor','12:00 PM',1],['Neha Gupta',14000,'Absent','—',0],['Vikram Singh',16500,'Floor','12:21 PM ⚠ late',1],['Tara Paul',15500,'Floor','12:02 PM',1]];
+const pc={Floor:'g',Break:'y',Absent:'r'};
+document.getElementById('roster').innerHTML=E.map(e=>`<tr><td>${e[0]}</td><td><span class="pill ${pc[e[2]]}">${e[2]=='Floor'?'On floor':e[2]=='Break'?'On break':'Absent'}</span></td><td class="mut">${e[3]}</td><td>${e[4]?'🟢':'⚪'}</td><td><button class="sbtn">${e[2]=='Absent'?'Punch in':'Punch out'}</button></td></tr>`).join('');
+// matrix
+let m='<div></div>';for(let d=1;d<=30;d++)m+=`<div class="mut" style="text-align:center">${d}</div>`;
+E.forEach((e,i)=>{m+=`<div class="n">${e[0]}</div>`;for(let d=1;d<=30;d++){let s=d>15?'f':((d*7+i*3)%17==0?'a':(d*5+i)%13==0?'l':'p');if(d==15&&e[2]=='Absent')s='a';m+=`<div class="c ${s}" data-n="${e[0]}" data-d="${d}" title="${e[0]} · Nov ${d}"></div>`}});
+const mx=document.getElementById('mx');mx.innerHTML=m;const pop=document.getElementById('pop');
+mx.onclick=ev=>{const t=ev.target;if(!t.classList.contains('a')){pop.style.display='none';return}
+ pop.innerHTML=`<b>${t.dataset.n} · Nov ${t.dataset.d}</b><p class="mut" style="margin:6px 0 10px">Unpaid leave · −₹${Math.round(18000/30)}</p><button class="sbtn pr" id="cv">Convert to Paid Leave</button>`;
+ const r=t.getBoundingClientRect(),p=t.closest('.card').getBoundingClientRect();pop.style.left=(r.left-p.left-100)+'px';pop.style.top=(r.bottom-p.top+6)+'px';pop.style.display='block';
+ document.getElementById('cv').onclick=()=>{t.className='c o';pop.style.display='none'}};
+// payroll
+const P=E.map((e,i)=>{const ded=[600,1067,0,1500,0,500,0,933,825,0][i],bon=[0,0,667,0,567,0,733,0,0,0][i];return[e[0],e[1],ded,bon,e[1]-ded+bon]});
+const f=n=>'₹'+n.toLocaleString('en-IN');
+document.getElementById('pay').innerHTML=P.map(p=>`<tr><td>${p[0]}</td><td>${f(p[1])}</td><td class="neg">${p[2]?'−'+f(p[2]):'—'}</td><td class="pos">${p[3]?'+'+f(p[3]):'—'}</td><td><b>${f(p[4])}</b></td></tr>`).join('');
+document.getElementById('wa').textContent='*Meats & Plants — Payroll Nov 2026* 🧾\n\n'+P.map(p=>`• ${p[0]}: *${f(p[4])}*${p[2]?` (−${f(p[2])})`:''}${p[3]?` (+${f(p[3])} OT)`:''}`).join('\n')+'\n\nQuestions? Check your Ledger in the app.';
+</script>
+</body>
+</html>
